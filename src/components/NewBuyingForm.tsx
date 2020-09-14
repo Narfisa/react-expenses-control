@@ -54,17 +54,25 @@ export const NewBuyingForm = ({formHandler}: NewBuyingFormProps) => {
     const classes = useStyles();
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
+    const [showMsg, setMsg] = useState('')
 
     function handleSaveButton() {
-        formHandler({
-            name,
-            cost
-        });
-        setName('');
-        setCost('');
+        if ((name !== '') && (cost !== '')) {            
+            formHandler({
+                name,
+                cost
+            });
+            setName('');
+            setCost('');
+            setMsg('false');
+        }
+        else {
+            setMsg('true');
+        }
     }
 
     return <Card className={classes.root}><CardContent>
+        { showMsg && <span font-color="orange">Пожалуйста, заполните поля ниже...</span> }
         <form className={classes.form} noValidate autoComplete="off">
             <TextField
                 value={name}
