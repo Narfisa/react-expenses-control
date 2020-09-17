@@ -54,7 +54,7 @@ export const NewBuyingForm = ({formHandler}: NewBuyingFormProps) => {
     const classes = useStyles();
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
-    const [showMsg, setMsg] = useState('')
+    const [showMsg, setMsg] = useState(false)
 
     function handleSaveButton() {
         if ((name !== '') && (cost !== '')) {            
@@ -64,10 +64,10 @@ export const NewBuyingForm = ({formHandler}: NewBuyingFormProps) => {
             });
             setName('');
             setCost('');
-            setMsg('false');
+            setMsg(false);
         }
         else {
-            setMsg('true');
+            setMsg(true);
         }
     }
 

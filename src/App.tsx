@@ -14,12 +14,17 @@ function App() {
         setBuyings([...buyings, newBuying]);
     }
 
+    function deleteHandler(index: number) {
+        buyings.splice(index,1);
+        setBuyings([...buyings]);
+    }
+
     return (
         <Container maxWidth="sm">
             <Typography variant="h2" gutterBottom>
                 Список покупок
             </Typography>
-            <BuyingsList buyings={buyings}/>
+            <BuyingsList buyings={buyings} deleteHanlder={deleteHandler}/>
             <NewBuyingForm formHandler={formHandler}/>
         </Container>
     );
