@@ -10,8 +10,13 @@ import {IBuying} from "./components/Buying";
 function App() {
     const [buyings, setBuyings] = useState<IBuying[]>([]);
 
-    function formHandler(newBuying: IBuying) {
-        setBuyings([...buyings, newBuying]);
+    function formHandler(newBuying: IBuying, isEdit: boolean) {
+        if (!isEdit) {
+            setBuyings([...buyings, newBuying]);
+        }
+        else {
+
+        }
     }
 
     function deleteHandler(index: number) {
@@ -24,7 +29,7 @@ function App() {
             <Typography variant="h2" gutterBottom>
                 Список покупок
             </Typography>
-            <BuyingsList buyings={buyings} deleteHanlder={deleteHandler}/>
+            <BuyingsList buyings={buyings} deleteHanlder={deleteHandler} formHandler={formHandler}/>
             <NewBuyingForm formHandler={formHandler}/>
         </Container>
     );

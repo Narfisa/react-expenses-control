@@ -15,15 +15,16 @@ const useStyles = makeStyles((theme) => ({
 type BuyingsListProps = {
     buyings: IBuying[];
     deleteHanlder: Function;
+    formHandler: Function;
 }
 
-export const BuyingsList = ({buyings, deleteHanlder}: BuyingsListProps) => {
+export const BuyingsList = ({buyings, deleteHanlder, formHandler}: BuyingsListProps) => {
     const classes = useStyles();
     const sum = buyings
         .map(buying => Number.parseFloat(buying.cost as any))
         .reduce((a, c) => a + c, 0);
 
-    const items = buyings.map((buying,index) => <Buying key={index} deleteHandler={deleteHanlder} index={index} buying={buying}/>)
+    const items = buyings.map((buying,index) => <Buying key={index} deleteHandler={deleteHanlder} formHandler={formHandler} index={index} buying={buying}/>)
 
     return <>
         {items}        
