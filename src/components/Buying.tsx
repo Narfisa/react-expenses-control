@@ -57,8 +57,8 @@ export const Buying = ({buying, index, deleteHandler, formHandler}: BuyingProps)
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={(e) => deleteHandler(index)}>Delete</Button>
-            <Button size="small" onClick={Edit}>Edit</Button>
+            <Button size="small" className="delete" onClick={(e) => deleteHandler(index)}>Delete</Button>
+            <Button size="small" className="edit" onClick={Edit}>Edit</Button>
         </CardActions>
         <Dialog open={edit} onClose={Close}
         aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"
