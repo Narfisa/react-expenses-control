@@ -10,13 +10,14 @@ import {IBuying} from "./components/Buying";
 function App() {
     const [buyings, setBuyings] = useState<IBuying[]>([]);
 
-    function formHandler(newBuying: IBuying, isEdit: boolean) {
-        if (!isEdit) {
-            setBuyings([...buyings, newBuying]);
+    function formHandler(newBuying: IBuying, index?: number) {
+        if (index !== undefined) {
+            buyings[index].cost = newBuying.cost
+            buyings[index].name = newBuying.name
         }
         else {
-
-        }
+            setBuyings([...buyings, newBuying]);
+        }   
     }
 
     function deleteHandler(index: number) {

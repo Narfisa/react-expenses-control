@@ -5,6 +5,7 @@ import NumberFormat from 'react-number-format';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { IBuying } from './Buying';
 
 interface NumberFormatCustomProps {
     inputRef: (instance: NumberFormat | null) => void;
@@ -48,22 +49,24 @@ const useStyles = makeStyles((theme) => ({
 
 type NewBuyingFormProps = {
     formHandler: Function;
+    editParam?: IBuying;
+    index?: number;
 }
 
-export const NewBuyingForm = ({formHandler}: NewBuyingFormProps) => {
+export const NewBuyingForm = ({formHandler, editParam, index}: NewBuyingFormProps) => {
     const classes = useStyles();
-    const [name, setName] = useState('');
-    const [cost, setCost] = useState('');
+    const [name, setName] = useState(editParam ? editParam.name : '');
+    const [cost, setCost] = useState(editParam ? editParam.cost : 0);
     const [showMsg, setMsg] = useState(false)
 
     function handleSaveButton() {
-        if ((name !== '') && (cost !== '')) {            
+        if ((name !== '') && (cost !== 0)) {            
             formHandler({
                 name,
                 cost
-            });
+            }, index);
             setName('');
-            setCost('');
+            setCost(0);
             setMsg(false);
         }
         else {
@@ -83,7 +86,7 @@ export const NewBuyingForm = ({formHandler}: NewBuyingFormProps) => {
             <TextField
                 value={cost}
                 label="Цена"
-                onChange={event => setCost(event.target.value)}
+                onChange={event => setCost(Number(event.target.value))}
                 InputProps={{
                     inputComponent: NumberFormatCustom as any,
                 }}
