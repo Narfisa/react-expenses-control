@@ -11,6 +11,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import { NewBuyingForm} from "./NewBuyingForm"
+import { useDispatch } from 'react-redux';
+import { actionDelete} from '../store/store';
 
 export interface IBuying {
     name: string;
@@ -20,8 +22,6 @@ export interface IBuying {
 type BuyingProps = {
     buying: IBuying;
     index: number;
-    deleteHandler: Function;
-    formHandler: Function;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -30,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Buying = ({buying, index, deleteHandler, formHandler}: BuyingProps) => {
+export const Buying = ({buying, index}: BuyingProps) => {
     const classes = useStyles();
     const [edit, setEdit] = useState(false)
+    const dispatch = useDispatch()
 
     function Edit(){
         setEdit(true);
@@ -43,8 +44,11 @@ export const Buying = ({buying, index, deleteHandler, formHandler}: BuyingProps)
     }
 
     function saveHandler(obj: IBuying, index: number) {
-        formHandler(obj, index);
         setEdit(false);
+    }
+
+    function deleteHandler(index: number){
+        dispatch(actionDelete(index));
     }
 
     return <Card className={classes.root}>
@@ -65,7 +69,7 @@ export const Buying = ({buying, index, deleteHandler, formHandler}: BuyingProps)
         >
             <DialogTitle id="alert-dialog-title"/>
             <DialogContent>
-                <NewBuyingForm formHandler={saveHandler} editParam={buying} index={index}/>
+                <NewBuyingForm dialogHandler={saveHandler} editParam={buying} index={index}/>
             </DialogContent>
             <DialogActions>
             <Button onClick={Close} color="primary" autoFocus>

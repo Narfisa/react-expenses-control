@@ -21,23 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
     const classes = useStyles();
-    const [buyings, setBuyings] = useState<IBuying[]>([]);
     const [isCreate, setIsCreate] = useState(false)
-
-    function formHandler(newBuying: IBuying, index?: number) {
-        if (index !== undefined) {
-            buyings[index].cost = newBuying.cost
-            buyings[index].name = newBuying.name
-        }
-        else {
-            setBuyings([...buyings, newBuying]);
-        }   
-    }
-
-    function deleteHandler(index: number) {
-        buyings.splice(index,1);
-        setBuyings([...buyings]);
-    }
 
     function Create(){
         setIsCreate(true);
@@ -47,8 +31,7 @@ function App() {
         setIsCreate(false);
     }
 
-    function createHandler(obj: IBuying){
-        formHandler(obj);
+    function dialogHandler(){
         setIsCreate(false);
     }
 
@@ -57,14 +40,14 @@ function App() {
             <Typography className={classes.button} variant="h2" gutterBottom>
                 Список покупок
             </Typography>
-            <BuyingsList buyings={buyings} deleteHanlder={deleteHandler} formHandler={formHandler}/>
+            <BuyingsList/>
             <Button onClick={Create} className={classes.button} variant="contained" color="primary" autoFocus> Создать </Button>
                 <Dialog open={isCreate} onClose={Close}
             aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title"/>
                 <DialogContent>
-                    <NewBuyingForm formHandler={createHandler}/>
+                    <NewBuyingForm dialogHandler={dialogHandler}/>
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={Close} color="primary" autoFocus>

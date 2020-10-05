@@ -10,7 +10,7 @@ describe("Render works (one elem)", () => {
     const formHandler = jest.fn();
     const deleteHandler = jest.fn();
 
-    const wrapper = mount(<BuyingsList buyings={buyings} formHandler={formHandler} deleteHanlder={deleteHandler}/>);
+    const wrapper = mount(<BuyingsList />);
 
     it("render an element", () => {
         let elem = wrapper.childAt(0)
@@ -44,7 +44,7 @@ describe("Render works (a few elem)", () => {
     ];
 
     it("render a few elements", () => {
-        const wrapper = mount(<BuyingsList buyings={fewBuyings} formHandler={formHandler} deleteHanlder={deleteHandler}/>);
+        const wrapper = mount(<BuyingsList />);
     
         let elem1 = wrapper.childAt(0)
         let elem2 = wrapper.childAt(1)

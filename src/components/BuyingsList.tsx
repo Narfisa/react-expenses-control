@@ -2,8 +2,10 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {makeStyles} from '@material-ui/core/styles';
-import {Buying, IBuying} from "./Buying";
+import {Buying} from "./Buying";
 import { Amount } from "./Amount";
+import { useSelector } from 'react-redux';
+import { IStoreState} from '../store/store'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -12,19 +14,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-type BuyingsListProps = {
-    buyings: IBuying[];
-    deleteHanlder: Function;
-    formHandler: Function;
-}
-
-export const BuyingsList = ({buyings, deleteHanlder, formHandler}: BuyingsListProps) => {
+export const BuyingsList = () => {
     const classes = useStyles();
+    const buyings = useSelector((state:IStoreState) => state.buyings);
+    console.log(buyings)
     const sum = buyings
-        .map(buying => Number.parseFloat(buying.cost as any))
+        .map((buying) => Number.parseFloat(buying.cost as any))
         .reduce((a, c) => a + c, 0);
 
-    const items = buyings.map((buying,index) => <Buying key={index} deleteHandler={deleteHanlder} formHandler={formHandler} index={index} buying={buying}/>)
+    const items = buyings.map((buying,index) => <Buying key={index} index={index} buying={buying}/>)
 
     return <>
         {items}        
