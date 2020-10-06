@@ -5,7 +5,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Buying} from "./Buying";
 import { Amount } from "./Amount";
 import { useSelector } from 'react-redux';
-import { IStoreState} from '../store/store'
+import { IStoreState, FilterValue} from '../store/store';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,13 +16,21 @@ const useStyles = makeStyles((theme) => ({
 
 export const BuyingsList = () => {
     const classes = useStyles();
-    const buyings = useSelector((state:IStoreState) => state.buyings);
-    console.log(buyings)
+    const buyings = useSelector((state:IStoreState) => state.buyings.filter(x => {
+        if (state.filter === FilterValue.DONE) {
+            return x.isDone 
+        }
+        if (state.filter === FilterValue.UNDONE) {
+            return !x.isDone 
+        }
+        return true;
+    }));
+    
     const sum = buyings
         .map((buying) => Number.parseFloat(buying.cost as any))
         .reduce((a, c) => a + c, 0);
 
-    const items = buyings.map((buying,index) => <Buying key={index} index={index} buying={buying}/>)
+    const items = buyings.map((buying) => <Buying key={buying.id} buying={buying}/>)
 
     return <>
         {items}        

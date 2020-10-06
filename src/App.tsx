@@ -6,12 +6,11 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import {BuyingsList} from "./components/BuyingsList";
 import {NewBuyingForm} from "./components/NewBuyingForm";
-import {IBuying} from "./components/Buying";
+import { Filter } from "./components/Filter";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -40,6 +39,8 @@ function App() {
             <Typography className={classes.button} variant="h2" gutterBottom>
                 Список покупок
             </Typography>
+            &nbsp;
+            <Filter/>
             <BuyingsList/>
             <Button onClick={Create} className={classes.button} variant="contained" color="primary" autoFocus> Создать </Button>
                 <Dialog open={isCreate} onClose={Close}

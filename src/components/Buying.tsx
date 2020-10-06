@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,21 +8,21 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import { NewBuyingForm} from "./NewBuyingForm"
-import { useDispatch } from 'react-redux';
-import { actionDelete} from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionDelete, IStoreState, actionSwitchDone} from '../store/store';
 
 export interface IBuying {
+    id: number;
     name: string;
     cost: number;
+    isDone: boolean;
 }
 
 type BuyingProps = {
     buying: IBuying;
-    index: number;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -30,10 +31,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Buying = ({buying, index}: BuyingProps) => {
+export const Buying = ({buying}: BuyingProps) => {
     const classes = useStyles();
     const [edit, setEdit] = useState(false)
     const dispatch = useDispatch()
+    const isDone = useSelector((state:IStoreState) => (state.buyings).find(x => x === buying))?.isDone
 
     function Edit(){
         setEdit(true);
@@ -43,17 +45,27 @@ export const Buying = ({buying, index}: BuyingProps) => {
         setEdit(false);
     }
 
-    function saveHandler(obj: IBuying, index: number) {
+    function saveHandler() {
         setEdit(false);
     }
 
-    function deleteHandler(index: number){
-        dispatch(actionDelete(index));
+    function deleteHandler(){
+        dispatch(actionDelete(buying.id));
+    }
+
+    function handleChange(){
+        dispatch(actionSwitchDone(buying.id));
     }
 
     return <Card className={classes.root}>
         <CardContent>
             <Typography variant="h5" component="h2">
+            <Checkbox
+                checked={isDone}
+                onChange={handleChange}
+                color="primary"
+                inputProps={{ 'aria-label': 'secondary checkbox' }}
+            />
                 {buying.name}
             </Typography>
             <Typography variant="body2" component="p">
@@ -61,7 +73,7 @@ export const Buying = ({buying, index}: BuyingProps) => {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small" className="delete" onClick={(e) => deleteHandler(index)}>Delete</Button>
+            <Button size="small" className="delete" onClick={(e) => deleteHandler()}>Delete</Button>
             <Button size="small" className="edit" onClick={Edit}>Edit</Button>
         </CardActions>
         <Dialog open={edit} onClose={Close}
@@ -69,7 +81,7 @@ export const Buying = ({buying, index}: BuyingProps) => {
         >
             <DialogTitle id="alert-dialog-title"/>
             <DialogContent>
-                <NewBuyingForm dialogHandler={saveHandler} editParam={buying} index={index}/>
+                <NewBuyingForm dialogHandler={saveHandler} editParam={buying} index={buying.id}/>
             </DialogContent>
             <DialogActions>
             <Button onClick={Close} color="primary" autoFocus>

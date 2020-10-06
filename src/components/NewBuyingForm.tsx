@@ -74,10 +74,10 @@ export const NewBuyingForm = ({editParam, dialogHandler, index}: NewBuyingFormPr
             setMsg(true);
         }
         if (index === undefined){      
-            dispatch(actionAdd({name, cost})) 
+            dispatch(actionAdd({name, cost, isDone: false})) 
         }
         else {            
-            dispatch(actionChange({name, cost}, index))
+            dispatch(actionChange({name, cost, isDone: false}, index))
         }
     }
 
