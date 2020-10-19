@@ -7,8 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { IBuying } from './Buying';
 import { useDispatch } from 'react-redux';
-import { actionAdd } from '../store/store';
-import { actionChange} from '../store/store';
+import { actions } from '../store/byingSlice';
 
 interface NumberFormatCustomProps {
     inputRef: (instance: NumberFormat | null) => void;
@@ -74,10 +73,10 @@ export const NewBuyingForm = ({editParam, dialogHandler, index}: NewBuyingFormPr
             setMsg(true);
         }
         if (index === undefined){      
-            dispatch(actionAdd({name, cost, isDone: false})) 
+            dispatch(actions.add({name, cost, isDone: false})) 
         }
         else {            
-            dispatch(actionChange({name, cost, isDone: false}, index))
+            dispatch(actions.change({id: index, name, cost, isDone: false}))
         }
     }
 

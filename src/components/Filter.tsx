@@ -1,21 +1,23 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionFilterChanged, FilterValue, IStoreState} from '../store/store';
+import { actions, FilterValue, getFilter} from '../store/byingSlice';
 
 export const Filter = () => {
     const dispatch = useDispatch();
-    const filter = useSelector((state:IStoreState) => state.filter);
+    const filter = useSelector(getFilter);
 
     function handleFilterAll() {
-        dispatch(actionFilterChanged(FilterValue.ALL));
+        dispatch(actions.filter(FilterValue.ALL));
     }
 
     function handleFilterDone() {
-        dispatch(actionFilterChanged(FilterValue.DONE));
+        dispatch(actions.filter(FilterValue.DONE));
     }
+
     function handleFilterUndone() {
-        dispatch(actionFilterChanged(FilterValue.UNDONE));
+        dispatch(actions.filter(FilterValue.UNDONE));
     }
+
     return <>
             <span onClick={handleFilterAll} 
             style={{textDecoration: filter === FilterValue.ALL ? 'underline' : 'none'}}>

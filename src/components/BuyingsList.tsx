@@ -2,10 +2,10 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {makeStyles} from '@material-ui/core/styles';
-import {Buying} from "./Buying";
+import {Buying, IBuying} from "./Buying";
 import { Amount } from "./Amount";
 import { useSelector } from 'react-redux';
-import { IStoreState, FilterValue} from '../store/store';
+import { getFilteredList} from '../store/byingSlice';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,21 +16,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const BuyingsList = () => {
     const classes = useStyles();
-    const buyings = useSelector((state:IStoreState) => state.buyings.filter(x => {
-        if (state.filter === FilterValue.DONE) {
-            return x.isDone 
-        }
-        if (state.filter === FilterValue.UNDONE) {
-            return !x.isDone 
-        }
-        return true;
-    }));
+    const buyings = useSelector(getFilteredList);
     
     const sum = buyings
-        .map((buying) => Number.parseFloat(buying.cost as any))
-        .reduce((a, c) => a + c, 0);
+        .map((buying: IBuying) => Number.parseFloat(buying.cost as any))
+        .reduce((a: number, c: number) => a + c, 0);
 
-    const items = buyings.map((buying) => <Buying key={buying.id} buying={buying}/>)
+    const items = buyings.map((buying: IBuying) => <Buying key={buying.id} buying={buying}/>)
 
     return <>
         {items}        

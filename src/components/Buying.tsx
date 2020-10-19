@@ -11,8 +11,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import { NewBuyingForm} from "./NewBuyingForm"
-import { useDispatch, useSelector } from 'react-redux';
-import { actionDelete, IStoreState, actionSwitchDone} from '../store/store';
+import { useDispatch } from 'react-redux';
+import { actions } from '../store/byingSlice';
 
 export interface IBuying {
     id: number;
@@ -35,7 +35,6 @@ export const Buying = ({buying}: BuyingProps) => {
     const classes = useStyles();
     const [edit, setEdit] = useState(false)
     const dispatch = useDispatch()
-    const isDone = useSelector((state:IStoreState) => (state.buyings).find(x => x === buying))?.isDone
 
     function Edit(){
         setEdit(true);
@@ -50,18 +49,18 @@ export const Buying = ({buying}: BuyingProps) => {
     }
 
     function deleteHandler(){
-        dispatch(actionDelete(buying.id));
+        dispatch(actions.delete(buying.id));
     }
 
     function handleChange(){
-        dispatch(actionSwitchDone(buying.id));
+        dispatch(actions.switchDone(buying.id));
     }
 
     return <Card className={classes.root}>
         <CardContent>
             <Typography variant="h5" component="h2">
             <Checkbox
-                checked={isDone}
+                checked={buying.isDone}
                 onChange={handleChange}
                 color="primary"
                 inputProps={{ 'aria-label': 'secondary checkbox' }}
