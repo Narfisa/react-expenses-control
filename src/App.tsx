@@ -8,8 +8,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
-import {BuyingsList} from "./components/BuyingsList";
-import {NewBuyingForm} from "./components/NewBuyingForm";
+import { BuyingsList } from "./components/BuyingsList";
+import { NewBuyingForm } from "./components/NewBuyingForm";
+import { GitAcc } from "./components/GitAcc";
 import { Filter } from "./components/Filter";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +37,7 @@ function App() {
 
     return (
         <Container maxWidth="sm">
+            <GitAcc/>
             <Typography className={classes.button} variant="h2" gutterBottom>
                 Список покупок
             </Typography>

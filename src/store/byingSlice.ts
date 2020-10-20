@@ -33,7 +33,7 @@ export const buyingController = createSlice({
             state.buyings = [...state.buyings, newBuying];
         },
         delete: (state: SliceState, action: PayloadAction<number>) => {
-            state.buyings.splice(action.payload, 1);
+            state.buyings = state.buyings.filter((buying) => buying.id !== action.payload);
         },
         change: (state: SliceState, action: PayloadAction<IBuying>) => {
             state.buyings = state.buyings.map((buying) => {
